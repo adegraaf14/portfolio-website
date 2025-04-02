@@ -71,3 +71,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all skill boxes
+    const skillBoxes = document.querySelectorAll('.skill-box');
+    
+    // Set up the observer
+    const skillsObserver = new IntersectionObserver((entries) => {
+        // If skills section is visible
+        if (entries[0].isIntersecting) {
+            // Animate each skill box with a delay
+            skillBoxes.forEach((box, index) => {
+                setTimeout(() => {
+                    box.classList.add('animate');
+                }, 100 * index); // 100ms delay between each skill
+            });
+            
+            // Disconnect the observer after animation runs once
+            skillsObserver.disconnect();
+        }
+    }, { threshold: 0.2 }); // Trigger when 20% of skills section is visible
+    
+    // Start observing the skills section
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+        skillsObserver.observe(skillsSection);
+    }
+});
