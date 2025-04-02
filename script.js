@@ -98,3 +98,44 @@ document.addEventListener('DOMContentLoaded', function() {
         skillsObserver.observe(skillsSection);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    // If no project cards found, try the container elements that hold your projects
+    // You may need to adjust this selector based on your HTML structure
+    if (projectCards.length === 0) {
+        const projectElements = document.querySelectorAll('#projects > div > div');
+        if (projectElements.length > 0) {
+            projectCards = projectElements;
+        }
+    }
+    
+    // Set up the observer
+    const projectsObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            // If project card is visible
+            if (entry.isIntersecting) {
+                // Get index of current card to calculate delay
+                const index = Array.from(projectCards).indexOf(entry.target);
+                
+                // Add animation with staggered delay
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                }, 150 * index); // 150ms delay between each project
+                
+                // Stop observing after animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { 
+        threshold: 0.15, // Trigger when 15% of card is visible
+        rootMargin: '0px 0px -100px 0px' // Trigger a bit before the card comes into full view
+    });
+    
+    // Start observing each project card
+    projectCards.forEach(card => {
+        projectsObserver.observe(card);
+    });
+});
