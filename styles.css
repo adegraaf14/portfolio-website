@@ -232,10 +232,10 @@ footer {
 
 /* Project images */
 
-/* Project cards styling */
 .projects-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin: 2.5rem auto;
     max-width: 1200px;
@@ -247,7 +247,8 @@ footer {
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
+    width: 320px; /* Fixed width for consistency */
+    max-width: 100%; /* Responsive on small screens */
     display: flex;
     flex-direction: column;
     opacity: 0;
@@ -352,8 +353,11 @@ footer {
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .projects-container {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1.5rem;
+    }
+    
+    .project-card {
+        width: 280px;
     }
     
     .project-image {
@@ -363,7 +367,13 @@ footer {
 
 @media screen and (max-width: 480px) {
     .projects-container {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .project-card {
+        width: 100%;
+        max-width: 320px;
     }
     
     .project-card h3 {
@@ -371,7 +381,6 @@ footer {
     }
 }
 
-/* Direct solution for skills section with explicit row structure */
 
 #skills {
     display: flex;
